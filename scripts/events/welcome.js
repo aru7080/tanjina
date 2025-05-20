@@ -6,7 +6,7 @@ module.exports = {
 	config: {
 		name: "welcome",
 		version: "1.7",
-		author: "NTKhang",
+		author: "NTKhang + customized",
 		category: "events"
 	},
 
@@ -19,17 +19,17 @@ module.exports = {
 			welcomeMessage: "Cảm ơn bạn đã mời tôi vào nhóm!\nPrefix bot: %1\nĐể xem danh sách lệnh hãy nhập: %1help",
 			multiple1: "bạn",
 			multiple2: "các bạn",
-			defaultWelcomeMessage: "Xin chào {userName}.\nChào mừng bạn đến với {boxName}.\nChúc bạn có buổi {session} vui vẻ!"
+			defaultWelcomeMessage: "🥰 𝘼𝙨𝙨𝙖𝙡𝙖𝙢𝙪 𝘼𝙡𝙖𝙞𝙠𝙪𝙢 {userNameTag}\n✨ 𝙒𝙚𝙡𝙘𝙤𝙢𝙚 {multiple} 𝙩𝙤 𝙤𝙪𝙧 𝙜𝙧𝙤𝙬𝙞𝙣𝙜 𝙛𝙖𝙢𝙞𝙡𝙮: 『{boxName}』!\n\n🌟 𝙔𝙤𝙪 𝙖𝙧𝙚 𝙩𝙝𝙚 {memberCount} 𝙥𝙧𝙚𝙘𝙞𝙤𝙪𝙨 𝙢𝙚𝙢𝙗𝙚𝙧{memberPlural}\n• 𝘼𝙙𝙙𝙚𝙙 𝙗𝙮: {inviterName}\n\n☀️ 𝙒𝙞𝙨𝙝𝙞𝙣𝙜 𝙮𝙤𝙪 𝙖 𝙬𝙤𝙣𝙙𝙚𝙧𝙛𝙪𝙡 {session} ahead!\n\n➤ 𝙋𝙡𝙚𝙖𝙨𝙚 𝙧𝙚𝙖𝙙 𝙤𝙪𝙧 𝙧𝙪𝙡𝙚𝙨: {prefix}rules\n➤ 𝙀𝙭𝙥𝙡𝙤𝙧𝙚 𝙘𝙤𝙤𝙡 𝙘𝙤𝙢𝙢𝙖𝙣𝙙𝙨: {prefix}help\n\n𝙃𝙖𝙫𝙚 𝙛𝙪𝙣 & 𝙚𝙣𝙟𝙤𝙮 𝙩𝙝𝙚 𝘾𝙃𝘼𝙏!"
 		},
 		en: {
-			session1: "𝗺𝗼𝗿𝗻𝗶𝗻𝗴",
-			session2: "𝗻𝗼𝗼𝗻",
-			session3: "𝗮𝗳𝘁𝗲𝗿𝗻𝗼𝗼𝗻",
-			session4: "𝗲𝘃𝗲𝗻𝗶𝗻𝗴",
-			welcomeMessage: "😘 𝗔𝘀𝘀𝗮𝗹𝗮𝗺𝘂 𝗮𝗹𝗮𝗶𝗸𝘂𝗺 😘\n\n 𝗧𝗵𝗮𝗻𝗸 𝘆𝗼𝘂 𝗳𝗼𝗿 𝗶𝗻𝘃𝗶𝘁𝗶𝗻𝗴 𝗺𝗲 𝘁𝗼 𝘁𝗵𝗲 𝗴𝗿𝗼𝘂𝗽!\n 𝗕𝗼𝘁 𝗽𝗿𝗲𝗳𝗶𝘅: %1\n𝗧𝗼 𝘃𝗶𝗲𝘄 𝘁𝗵𝗲 𝗹𝗶𝘀𝘁 𝗼𝗳 𝗰𝗼𝗺𝗺𝗮𝗻𝗱𝘀, 𝗽𝗹𝗲𝗮𝗰𝗲 𝗲𝗻𝘁𝗲𝗿: %1𝗵𝗲𝗹𝗽\n\n♻ 𝗜 𝗵𝗼𝗽𝗲 𝘆𝗼𝘂 𝘄𝗶𝗹𝗹 𝗳𝗼𝗹𝗹𝗼𝘄 𝗼𝘂𝗿 𝗮𝗹𝗹 𝗴𝗿𝗼𝘂𝗽 𝗿𝘂𝗹𝗲𝘀 ♻",
-			multiple1: "𝘆𝗼𝘂",
-			multiple2: "𝘆𝗼𝘂 𝗴𝘂𝘆𝘀",
-			defaultWelcomeMessage: `🍒𝗔𝘀𝘀𝗮𝗹𝗮𝗺𝘂 𝗮𝗹𝗮𝗶𝗸𝘂𝗺🍒\n\n 𝗛𝗲𝗹𝗹𝗼 {userName}.\n𝗪𝗲𝗹𝗰𝗼𝗺𝗲 {multiple} 𝗧𝗼 𝘁𝗵𝗲 𝗰𝗮𝘁 𝗴𝗿𝗼𝘂𝗽: {boxName}\n 𝗛𝗮𝘃𝗲 𝗮 𝗻𝗶𝗰𝗲 {session} \n\n♻ 𝗜 𝗵𝗼𝗽𝗲 𝘆𝗼𝘂 𝘄𝗶𝗹𝗹 𝗳𝗼𝗹𝗹𝗼𝘄 𝗼𝘂𝗿 𝗮𝗹𝗹 𝗴𝗿𝗼𝘂𝗽 𝗿𝘂𝗹𝗲𝘀 ♻\n\n🐔🌬 𝗔𝗽𝗻𝗮𝗸𝗲 𝗮𝗺𝗮𝗱𝗲𝗿 𝗮𝗶 𝗴𝗿𝗼𝘂𝗽𝗲 𝗮𝘀𝗮𝗿 𝗷𝗼𝗻𝗻𝗼 𝗮𝗻𝗲𝗸 𝗼𝗻𝗲𝗸 𝘀𝘂𝗯𝗲𝗰𝗰𝗵𝗮 😘😊`
+			session1: "morning",
+			session2: "noon",
+			session3: "afternoon",
+			session4: "evening",
+			welcomeMessage: "Thank you for inviting me to the group!\nBot prefix: %1\nTo view the list of commands, please enter: %1help",
+			multiple1: "you",
+			multiple2: "you guys",
+			defaultWelcomeMessage: "🥰 𝘼𝙨𝙨𝙖𝙡𝙖𝙢𝙪 𝘼𝙡𝙖𝙞𝙠𝙪𝙢 {userNameTag}\n✨ 𝙒𝙚𝙡𝙘𝙤𝙢𝙚 {multiple} 𝙩𝙤 𝙤𝙪𝙧 𝙜𝙧𝙤𝙬𝙞𝙣𝙜 𝙛𝙖𝙢𝙞𝙡𝙮: 『{boxName}』!\n\n🌟 𝙔𝙤𝙪 𝙖𝙧𝙚 𝙩𝙝𝙚 {memberCount} 𝙥𝙧𝙚𝙘𝙞𝙤𝙪𝙨 𝙢𝙚𝙢𝙗𝙚𝙧{memberPlural}\n• 𝘼𝙙𝙙𝙚𝙙 𝙗𝙮: {inviterName}\n\n☀️ 𝙒𝙞𝙨𝙝𝙞𝙣𝙜 𝙮𝙤𝙪 𝙖 𝙬𝙤𝙣𝙙𝙚𝙧𝙛𝙪𝙡 {session} ahead!\n\n➤ 𝙋𝙡𝙚𝙖𝙨𝙚 𝙧𝙚𝙖𝙙 𝙤𝙪𝙧 𝙧𝙪𝙡𝙚𝙨: {prefix}rules\n➤ 𝙀𝙭𝙥𝙡𝙤𝙧𝙚 𝙘𝙤𝙤𝙡 𝙘𝙤𝙢𝙢𝙖𝙣𝙙𝙨: {prefix}help\n\n𝙃𝙖𝙫𝙚 𝙛𝙪𝙣 & 𝙚𝙣𝙟𝙤𝙮 𝙩𝙝𝙚 𝘾𝙃𝘼𝙏!"
 		}
 	},
 
@@ -41,25 +41,21 @@ module.exports = {
 				const { nickNameBot } = global.GoatBot.config;
 				const prefix = global.utils.getPrefix(threadID);
 				const dataAddedParticipants = event.logMessageData.addedParticipants;
-				// if new member is bot
 				if (dataAddedParticipants.some((item) => item.userFbId == api.getCurrentUserID())) {
 					if (nickNameBot)
 						api.changeNickname(nickNameBot, threadID, api.getCurrentUserID());
 					return message.send(getLang("welcomeMessage", prefix));
 				}
-				// if new member:
+
 				if (!global.temp.welcomeEvent[threadID])
 					global.temp.welcomeEvent[threadID] = {
 						joinTimeout: null,
 						dataAddedParticipants: []
 					};
 
-				// push new member to array
 				global.temp.welcomeEvent[threadID].dataAddedParticipants.push(...dataAddedParticipants);
-				// if timeout is set, clear it
 				clearTimeout(global.temp.welcomeEvent[threadID].joinTimeout);
 
-				// set new timeout
 				global.temp.welcomeEvent[threadID].joinTimeout = setTimeout(async function () {
 					const threadData = await threadsData.get(threadID);
 					if (threadData.settings.sendWelcomeMessage == false)
@@ -67,8 +63,7 @@ module.exports = {
 					const dataAddedParticipants = global.temp.welcomeEvent[threadID].dataAddedParticipants;
 					const dataBanned = threadData.data.banned_ban || [];
 					const threadName = threadData.threadName;
-					const userName = [],
-						mentions = [];
+					const userName = [], mentions = [];
 					let multiple = false;
 
 					if (dataAddedParticipants.length > 1)
@@ -83,34 +78,23 @@ module.exports = {
 							id: user.userFbId
 						});
 					}
-					// {userName}:   name of new member
-					// {multiple}:
-					// {boxName}:    name of group
-					// {threadName}: name of group
-					// {session}:    session of day
 					if (userName.length == 0) return;
-					let { welcomeMessage = getLang("defaultWelcomeMessage") } =
-						threadData.data;
+					let { welcomeMessage = getLang("defaultWelcomeMessage") } = threadData.data;
 					const form = {
 						mentions: welcomeMessage.match(/\{userNameTag\}/g) ? mentions : null
 					};
+
+					const memberCount = (await api.getThreadInfo(threadID)).participantIDs.length;
+					const inviterName = event.logMessageData.inviterName || "Unknown";
+
 					welcomeMessage = welcomeMessage
 						.replace(/\{userName\}|\{userNameTag\}/g, userName.join(", "))
 						.replace(/\{boxName\}|\{threadName\}/g, threadName)
-						.replace(
-							/\{multiple\}/g,
-							multiple ? getLang("multiple2") : getLang("multiple1")
-						)
-						.replace(
-							/\{session\}/g,
-							hours <= 10
-								? getLang("session1")
-								: hours <= 12
-									? getLang("session2")
-									: hours <= 18
-										? getLang("session3")
-										: getLang("session4")
-						);
+						.replace(/\{multiple\}/g, multiple ? getLang("multiple2") : getLang("multiple1"))
+						.replace(/\{session\}/g, hours <= 10 ? getLang("session1") : hours <= 12 ? getLang("session2") : hours <= 18 ? getLang("session3") : getLang("session4"))
+						.replace(/\{memberCount\}/g, memberCount)
+						.replace(/\{inviterName\}/g, inviterName)
+						.replace(/\{memberPlural\}/g, memberCount > 1 ? "s" : "");
 
 					form.body = welcomeMessage;
 
