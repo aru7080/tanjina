@@ -1,26 +1,6 @@
 {
-  "adminNumber": "8801839268235",
-  "botName": "GoatBot",
-  "0": "U",
-  "1": "p",
-  "2": "d",
-  "3": "a",
-  "4": "t",
-  "5": "e",
-  "6": " ",
-  "7": "c",
-  "8": "o",
-  "9": "n",
-  "10": "f",
-  "11": "i",
-  "12": "g",
-  "13": ".",
-  "14": "j",
-  "15": "s",
-  "16": "o",
-  "17": "n",
   "facebookAccount": {
-    "email": "",
+    "email": "cm",
     "password": "",
     "2FASecret": "",
     "i_user": "",
@@ -37,50 +17,33 @@
     "ignoreCommand": []
   },
   "adminBot": [
-    "61573546232273",
-    ""
-  ],
+    "61573546232273"],
   "whiteListMode": {
     "enable": false,
-    "whiteListIds": [
-      "61573546232273"
-    ],
+    "whiteListIds": ["61573546232273","61567716255506","61566026247773"],
     "notes": "if you enable this feature, only the ids in the whiteListIds section can use the bot"
   },
-  "nickNameBot": "Ariyan bot",
+  "nickNameBot": " Ｓｔｅｗｉｅ ",
   "prefix": ")",
-  "BaYjidnapi": "",
-  "api": "",
-  "api2": "",
-  "api3": "",
-  "authorName": "ayan",
-  "facebook2": "https://www.facebook.com/BAYJID.404",
-  "facebook": "https://www.facebook.com/BAYJID.404",
-  "email": "mohammadbayjid204@yahoo.com",
-  "replit": "https://replit.com/@biju",
-  "github": "https://github.com/BAYJID-404-BOYZ",
-  "insta": "no",
-  "age": "17+",
-  "TG": "",
   "database": {
-    "type": "mongodb",
-    "uriMongodb": "mongodb+srv://ntayan:ntayan@cluster0.7c7svby.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
+    "type": "sqlite",
+    "uriMongodb": "",
     "autoSyncWhenStart": false,
     "autoRefreshThreadInfoFirstTime": true,
-    "notes": "(1) type selects 'json' or 'sqlite' or 'mongodb'. If you choose mongodb, enter uri connect mongodb in the uriMongodb section, instructions to get uri connect mongodb at: https://youtu.be/z1f9urHW5xY. I recommend using 'mongodb' or 'sqlite', json is not recommended because it is not stable. (2) when you set autoSyncWhenStart to true, the bot will automatically synchronize the data in the database when starting the bot, this will make the bot start slower. (3) when youf set autoRefreshThreadInfoFirstTime to true, the bot will automatically refresh the thread information when get first message from the thread since starting the bot"
+    "notes": "(1) type selects 'json' or 'sqlite' or 'mongodb'. If you choose mongodb, enter uri connect mongodb in the uriMongodb section, instructions to get uri connect mongodb at: https://youtu.be/z1f9urHW5xY. I recommend using 'mongodb' or 'sqlite', json is not recommended because it is not stable. (2) when you set autoSyncWhenStart to true, the bot will automatically synchronize the data in the database when starting the bot, this will make the bot start slower. (3) when you set autoRefreshThreadInfoFirstTime to true, the bot will automatically refresh the thread information when get first message from the thread since starting the bot"
   },
-  "timeZone": "Asia/Dhaka",
+  "timeZone": "Asia/Kathmandu",
   "credentials": {
     "gmailAccount": {
-      "email": "",
-      "clientId": "249889492292-qff3skitvnud3hle736ugm3tt53fh1sg.apps.googleusercontent.com",
-      "clientSecret": "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",
-      "refreshToken": "1//04l_q7zGN41-ECgYIARAAGAQSNwF-L9Ir-t_MXlcP231dJo3boIXhkCZj0wdxFRo6xNCEc36kzQhJ3uJwhmTeAVHizb1XofhvSHw",
+      "email": "xemonbae@gmail.com",
+      "clientId": "703210852639-ic8u4br6bdo6jg6dgguirqi7jkgbpl6l.apps.googleusercontent.com",
+      "clientSecret": "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",
+      "refreshToken": "1//04svAaCtGHs-ICgYIARAAGAQSNwF-L9IrjiQvNzr409HIVspHncIVnrz7ZI5VxTU3dvw5TwHLZi1BhYEwEJNs9YpLDm7xDEBt1fU",
       "apiKey": ""
     },
     "gRecaptcha": {
-      "siteKey": "6LeYA1gpAAAAALcbHRIVGcL69QwgbXIbBZpvlJ3q",
-      "secretKey": "6LeYA1gpAAAAAI13alckf64lV0MfuEQf3EObX4ye"
+      "siteKey": "6LesKYgpAAAAAOKKCkeeHYPSi0ublhQ0wRa6Axuq",
+      "secretKey": "6LesKYgpAAAAAL4fodXBHXocKQzvP9uXLFvavI18"
     }
   },
   "dashBoard": {
@@ -126,14 +89,14 @@
   "notiWhenListenMqttError": {
     "notes": "This is the message when the bot is listening to the mqtt server and the mqtt server stops working due to account problems such as: locked acc, blocked due to spam,... bot will automatically send notifications to parts of your settings. You must change enable to true to use this feature. See bot/login/handlerWhenListenHasError.js file for details on how it works",
     "gmail": {
-      "enable": false,
-      "emailGetNoti": "",
+      "enable": true,
+      "emailGetNoti": "easiriqbalmahi@gmail.com",
       "note": "Bot will use gmailAccount to send email to emailGetNoti, can send notifications to many email, separate by comma or space, example: \"example1@gmail.com example2@gmail.com\" (without backslash)"
     },
     "telegram": {
-      "enable": false,
-      "botToken": "",
-      "chatId": "",
+      "enable": true,
+      "botToken": "7387163316:AAEwosLrm3z7O9ZmarV9copn0Pq7Bx7QCPY",
+      "chatId": "1002183169237 6164300010",
       "note": "Can send notifications to many chatId, separate by comma or space, example: \"123456789 987654321\" (without backslash)"
     },
     "discordHook": {
@@ -146,14 +109,16 @@
     "wrongCommand": false,
     "adminOnly": false,
     "threadBanned": false,
-    "userBanned": false
+    "userBanned": false,
+    "needRoleToUseCmdOnReply": false,
+    "needRoleToUseCmdOnReaction": false
   },
   "logEvents": {
-    "disableAll": true,
+    "disableAll": false,
     "message": true,
-    "message_reaction": false,
+    "message_reaction": true,
     "message_unsend": true,
-    "message_reply": false,
+    "message_reply": true,
     "event": true,
     "read_receipt": false,
     "typ": false,
@@ -165,18 +130,10 @@
     "updatePresence": true,
     "listenTyping": true,
     "logLevel": "error",
-    "selfListen": false,
+    "selfListen": true,
     "selfListenEvent": true,
     "autoMarkDelivery": false,
-    "autoReconnect": false,
+    "autoReconnect": true,
     "notes": "Document here: https://github.com/ntkhang03/fb-chat-api/blob/master/DOCS.md#apisetoptionsoptions "
-  },
-  "whiteListModeThread": {
-    "enable": false,
-    "whiteListThreadIds": [
-      ""
-    ],
-    "notes": "if you enable this feature, only the thread in the whiteListThreadIds list can use the bot",
-    "how_it_work": "if you enable both whiteListMode and whiteListModeThread, the system will check if the user is in whiteListIds, then check if the thread is in whiteListThreadIds, if one of the conditions is true, the user can use the bot"
   }
 }
