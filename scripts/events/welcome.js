@@ -5,8 +5,8 @@ if (!global.temp.welcomeEvent)
 module.exports = {
   config: {
     name: "welcome",
-    version: "2.1",
-    author: "@Ariyan",
+    version: "2.0",
+    author: "NTKhang + customized by ChatGPT",
     category: "events"
   },
 
@@ -32,6 +32,7 @@ module.exports = {
   onStart: async ({ threadsData, message, event, api, getLang }) => {
     if (event.logMessageType !== "log:subscribe") return;
 
+    const hours = getTime("HH");
     const { threadID } = event;
     const { nickNameBot } = global.GoatBot.config;
     const prefix = global.utils.getPrefix(threadID);
@@ -75,21 +76,26 @@ module.exports = {
       const memberInfo = await api.getThreadInfo(threadID);
       const memberCount = memberInfo.participantIDs.length;
 
-      // Member positions
+      // Generate member positions
       const memberIndexList = [];
       for (let i = memberCount - names.length + 1; i <= memberCount; i++) {
         memberIndexList.push(i + getNumberSuffix(i));
       }
 
-      // Inviter name + tag
+      // Get inviter name and mention
       const inviterID = event.logMessageData.inviterID;
       let inviterName = "Unknown";
       let inviterMention = null;
+
       try {
         const info = await api.getUserInfo(inviterID);
-        inviterName = info[inviterID]?.name || "Unknown";
+        const inviterData = Object.values(info)[0];
+        inviterName = inviterData?.name || "Unknown";
         inviterMention = { tag: inviterName, id: inviterID };
-      } catch (e) {}
+        mentions.push(inviterMention);
+      } catch (e) {
+        console.error("Error getting inviter info:", e);
+      }
 
       const form = {
         body: welcomeMsgTemplate
@@ -98,12 +104,12 @@ module.exports = {
           .replace(/\{boxName\}/g, threadName)
           .replace(/\{memberIndex\}/g, memberIndexList.join(", "))
           .replace(/\{memberPlural\}/g, names.length > 1 ? "s" : "")
-          .replace(/\{inviterName\}/g, inviterMention ? inviterMention.tag : inviterName)
+          .replace(/\{inviterName\}/g, inviterMention?.tag || inviterName)
           .replace(/\{prefix\}/g, prefix),
-        mentions: inviterMention ? [...mentions, inviterMention] : mentions
+        mentions
       };
 
-      // Attachments
+      // Include attachments if any
       if (threadData.data.welcomeAttachment) {
         const files = threadData.data.welcomeAttachment;
         const attachments = files.map(file => drive.getFile(file, "stream"));
@@ -118,6 +124,7 @@ module.exports = {
   }
 };
 
+// Helper to get suffix like 1st, 2nd, 3rd, etc.
 function getNumberSuffix(n) {
   const s = ["th", "st", "nd", "rd"];
   const v = n % 100;
