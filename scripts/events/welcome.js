@@ -1,11 +1,10 @@
 const { getTime, drive } = global.utils;
-if (!global.temp.welcomeEvent)
-  global.temp.welcomeEvent = {};
+if (!global.temp.welcomeEvent) global.temp.welcomeEvent = {};
 
 module.exports = {
   config: {
     name: "welcome",
-    version: "2.0",
+    version: "2.1",
     author: "@ARIYAN",
     category: "events"
   },
@@ -19,26 +18,29 @@ module.exports = {
       multiple1: "you",
       multiple2: "you guys",
       defaultWelcomeMessage:
-`🥰 𝙰𝚂𝚂𝙰𝙻𝙰𝙼𝚄𝙰𝙻𝙰𝙸𝙺𝚄𝙼 {userNameTag}, 𝚠𝚎𝚕𝚌𝚘𝚖𝚎 {multiple} 𝚃𝚘 𝙾𝚞𝚛 {boxName} 𝙶𝚛𝚘𝚞𝚙😊
-• 𝙸 𝙷𝚘𝚙𝚎 𝚈𝚘𝚞 𝚆𝚒𝚕𝚕 𝙵𝚘𝚕𝚕𝚘𝚠 𝙾𝚞𝚛 𝙶𝚛𝚘𝚞𝚙 𝚁𝚞𝚕𝚎𝚜
-• {prefix}rules 𝚏𝚘𝚛 𝙶𝚛𝚘𝚞𝚙 𝚁𝚞𝚕𝚎𝚜
-• {prefix}help 𝙵𝚘𝚛 𝙰𝚕𝚕 𝙲𝚘𝚖𝚖𝚊𝚗𝚍𝚜
+`𝐀𝐒𝐒𝐀𝐋𝐀𝐌𝐔𝐀𝐋𝐀𝐈𝐊𝐔𝐌 {userNameTag} ❤️
 
-• 𝚈𝚘𝚞 𝙰𝚛𝚎 𝚃𝚑𝚎 {memberIndex} 𝙼𝚎𝚖𝚋𝚎𝚛{memberPlural} 𝚒𝚗 𝙾𝚞𝚛 𝙶𝚛𝚘𝚞𝚙
-• 𝙰𝚍𝚍𝚎𝚍 𝙱𝚢: {inviterName}`
+𝐖𝐞𝐥𝐜𝐨𝐦𝐞 {multiple} 𝐓𝐨 𝐎𝐮𝐫 『{boxName}』 𝐆𝐫𝐨𝐮𝐩!
+
+━━━━━━━━━━━━━━━━━━
+𝐑𝐮𝐥𝐞𝐬 𝐨𝐟 𝐎𝐮𝐫 𝐂𝐨𝐦𝐦𝐮𝐧𝐢𝐭𝐲:
+• Use {prefix}rules to read group rules
+• Use {prefix}help to explore bot commands
+
+𝐘𝐨𝐮 𝐚𝐫𝐞 𝐭𝐡𝐞 {memberIndex} 𝐦𝐞𝐦𝐛𝐞𝐫{memberPlural} 𝐨𝐟 𝐭𝐡𝐞 𝐠𝐫𝐨𝐮𝐩!
+𝐀𝐝𝐝𝐞𝐝 𝐛𝐲: {inviterName}`
     }
   },
 
   onStart: async ({ threadsData, message, event, api, getLang }) => {
     if (event.logMessageType !== "log:subscribe") return;
 
-    const hours = getTime("HH");
     const { threadID } = event;
     const { nickNameBot } = global.GoatBot.config;
     const prefix = global.utils.getPrefix(threadID);
     const dataAddedParticipants = event.logMessageData.addedParticipants;
 
-    // Bot was added
+    // Bot added
     if (dataAddedParticipants.some(u => u.userFbId == api.getCurrentUserID())) {
       if (nickNameBot)
         api.changeNickname(nickNameBot, threadID, api.getCurrentUserID());
@@ -76,26 +78,26 @@ module.exports = {
       const memberInfo = await api.getThreadInfo(threadID);
       const memberCount = memberInfo.participantIDs.length;
 
-      // Generate member positions
+      // Member index
       const memberIndexList = [];
       for (let i = memberCount - names.length + 1; i <= memberCount; i++) {
         memberIndexList.push(i + getNumberSuffix(i));
       }
 
-      // Get inviter name and mention
-      const inviterID = event.logMessageData.inviterID;
+      // Get inviter name
+      const inviterID = event.logMessageData.inviterID || event.senderID;
       let inviterName = "Unknown";
-      let inviterMention = null;
+      let inviterMention = { tag: "Unknown", id: inviterID };
 
       try {
         const info = await api.getUserInfo(inviterID);
-        const inviterData = Object.values(info)[0];
-        inviterName = inviterData?.name || "Unknown";
+        inviterName = info[inviterID]?.name || "Unknown";
         inviterMention = { tag: inviterName, id: inviterID };
-        mentions.push(inviterMention);
       } catch (e) {
-        console.error("Error getting inviter info:", e);
+        console.warn("Failed to fetch inviter name:", e.message);
       }
+
+      mentions.push(inviterMention);
 
       const form = {
         body: welcomeMsgTemplate
@@ -104,12 +106,12 @@ module.exports = {
           .replace(/\{boxName\}/g, threadName)
           .replace(/\{memberIndex\}/g, memberIndexList.join(", "))
           .replace(/\{memberPlural\}/g, names.length > 1 ? "s" : "")
-          .replace(/\{inviterName\}/g, inviterMention?.tag || inviterName)
+          .replace(/\{inviterName\}/g, `@${inviterName}`)
           .replace(/\{prefix\}/g, prefix),
         mentions
       };
 
-      // Include attachments if any
+      // Attachments (if any)
       if (threadData.data.welcomeAttachment) {
         const files = threadData.data.welcomeAttachment;
         const attachments = files.map(file => drive.getFile(file, "stream"));
@@ -124,9 +126,8 @@ module.exports = {
   }
 };
 
-// Helper to get suffix like 1st, 2nd, 3rd, etc.
 function getNumberSuffix(n) {
   const s = ["th", "st", "nd", "rd"];
   const v = n % 100;
-  return (s[(v - 20) % 10] || s[v] || s[0]);
+  return s[(v - 20) % 10] || s[v] || s[0];
 }
