@@ -1,11 +1,12 @@
 const { getTime, drive } = global.utils;
-if (!global.temp.welcomeEvent) global.temp.welcomeEvent = {};
+if (!global.temp.welcomeEvent)
+  global.temp.welcomeEvent = {};
 
 module.exports = {
   config: {
     name: "welcome",
     version: "2.0",
-    author: "Ariyan",
+    author: "NTKhang x @ariyan",
     category: "events"
   },
 
@@ -16,77 +17,98 @@ module.exports = {
       session3: "afternoon",
       session4: "evening",
       multiple1: "you",
-      multiple2: "you guys"
+      multiple2: "you guys",
+      defaultWelcomeMessage:
+`🥰 𝙰𝚂𝚂𝙰𝙻𝙰𝙼𝚄𝙰𝙻𝙰𝙸𝙺𝚄𝙼 {userNameTag},𝚠𝚎𝚕𝚌𝚘𝚖𝚎 {multiple} 𝚃𝚘 𝙾𝚞𝚛 {boxName}𝙶𝚛𝚘𝚞𝚙😊
+• 𝙸 𝙷𝚘𝚙𝚎 𝚈𝚘𝚞 𝚆𝚒𝚕𝚕 𝙵𝚘𝚕𝚕𝚘𝚠 𝙾𝚞𝚛 𝙶𝚛𝚘𝚞𝚙 𝚁𝚞𝚕𝚎𝚜
+• {prefix}rules 𝚏𝚘𝚛 𝙶𝚛𝚘𝚞𝚙 𝚁𝚞𝚕𝚎𝚜
+• {prefix}help 𝙵𝚘𝚛 𝙰𝚕𝚕 𝙲𝚘𝚖𝚖𝚊𝚗𝚍𝚜
+
+• 𝚈𝚘𝚞 𝙰𝚛𝚎 𝚃𝚑𝚎 {memberIndex} 𝙼𝚎𝚖𝚋𝚎𝚛{memberPlural} 𝚒𝚗 𝙾𝚞𝚛 𝙶𝚛𝚘𝚞𝚙
+• 𝙰𝚍𝚍𝚎𝚍 𝙱𝚢: {inviterName}`
     }
   },
 
   onStart: async ({ threadsData, message, event, api, getLang }) => {
     if (event.logMessageType !== "log:subscribe") return;
 
-    const { threadID } = event;
     const hours = getTime("HH");
-    const added = event.logMessageData.addedParticipants;
+    const { threadID } = event;
+    const { nickNameBot } = global.GoatBot.config;
+    const prefix = global.utils.getPrefix(threadID);
+    const dataAddedParticipants = event.logMessageData.addedParticipants;
+
+    // Bot was added
+    if (dataAddedParticipants.some(u => u.userFbId == api.getCurrentUserID())) {
+      if (nickNameBot)
+        api.changeNickname(nickNameBot, threadID, api.getCurrentUserID());
+      return message.send(getLang("welcomeMessage", prefix));
+    }
 
     if (!global.temp.welcomeEvent[threadID])
-      global.temp.welcomeEvent[threadID] = { joinTimeout: null, dataAddedParticipants: [] };
+      global.temp.welcomeEvent[threadID] = {
+        joinTimeout: null,
+        dataAddedParticipants: []
+      };
 
-    global.temp.welcomeEvent[threadID].dataAddedParticipants.push(...added);
+    global.temp.welcomeEvent[threadID].dataAddedParticipants.push(...dataAddedParticipants);
     clearTimeout(global.temp.welcomeEvent[threadID].joinTimeout);
 
-    global.temp.welcomeEvent[threadID].joinTimeout = setTimeout(async () => {
+    global.temp.welcomeEvent[threadID].joinTimeout = setTimeout(async function () {
       const threadData = await threadsData.get(threadID);
-      if (threadData?.settings?.sendWelcomeMessage === false) return;
+      if (threadData.settings.sendWelcomeMessage === false) return;
 
-      const addedList = global.temp.welcomeEvent[threadID].dataAddedParticipants;
-      const threadName = threadData.threadName || "our group";
+      const addedUsers = global.temp.welcomeEvent[threadID].dataAddedParticipants;
+      const dataBanned = threadData.data.banned_ban || [];
+      const threadName = threadData.threadName;
       const mentions = [];
-      const nameList = [];
+      const names = [];
 
-      let allMentions = "";
-      for (const user of addedList) {
-        nameList.push(user.fullName);
+      for (const user of addedUsers) {
+        if (dataBanned.some(ban => ban.id == user.userFbId)) continue;
+        names.push(user.fullName);
         mentions.push({ tag: user.fullName, id: user.userFbId });
-        allMentions += user.fullName + ", ";
       }
 
-      if (nameList.length === 0) return;
+      if (names.length === 0) return;
 
-      const multiple = nameList.length > 1 ? getLang("multiple2") : getLang("multiple1");
+      const welcomeMsgTemplate = threadData.data.welcomeMessage || getLang("defaultWelcomeMessage");
       const memberInfo = await api.getThreadInfo(threadID);
-      const memberIDs = memberInfo.participantIDs || [];
-      const memberIndexes = addedList.map(u => memberIDs.indexOf(u.userFbId) + 1);
-      const indexText = memberIndexes.map(i => `${i}${ordinalSuffix(i)}`).join(", ");
-      const inviter = event.logMessageData.inviterName || "Unknown";
+      const memberCount = memberInfo.participantIDs.length;
 
-      const session =
-        hours <= 10 ? getLang("session1")
-        : hours <= 12 ? getLang("session2")
-        : hours <= 18 ? getLang("session3")
-        : getLang("session4");
+      // Generate member positions
+      const memberIndexList = [];
+      for (let i = memberCount - names.length + 1; i <= memberCount; i++) {
+        memberIndexList.push(i + getNumberSuffix(i));
+      }
 
-      const body = 
-`🥰 𝙰𝚂𝚂𝙰𝙻𝙰𝙼𝚄𝙰𝙻𝙰𝙸𝙺𝚄𝙼 ${nameList.join(", ")}
-✨ Welcome ${multiple} To Our 『${threadName}』 Group!
-
-• 𝙸 𝙷𝚘𝚙𝚎 𝚈𝚘𝚞 𝚆𝚒𝚕𝚕 𝚏𝚘𝚕𝚕𝚘𝚠 𝙾𝚞𝚛 𝙶𝚛𝚘𝚞𝚙 𝚁𝚞𝚕𝚎𝚜
-• !𝚛𝚞𝚕𝚎𝚜 𝚏𝚘𝚛 𝙶𝚛𝚘𝚞𝚙 𝚛𝚞𝚕𝚎𝚜
-• !𝚑𝚎𝚕𝚙 𝙵𝚘𝚛 𝚊𝚕𝚕 𝙲𝚘𝚖𝚖𝚊𝚗𝚍
-
-• 𝚈𝚘𝚞 𝙰𝚛𝚎 𝚃𝚑𝚎 ${indexText} 𝙼𝚎𝚖𝚋𝚎𝚛${memberIndexes.length > 1 ? "s" : ""} 𝚒𝚗 𝙾𝚞𝚛 𝙶𝚛𝚘𝚞𝚙
-• 𝙰𝚍𝚍𝚎𝚍 𝙱𝚢: ${inviter}
-`;
+      // Get inviter name using user ID
+      const inviterID = event.logMessageData.inviterID;
+      let inviterName = "Unknown";
+      try {
+        const info = await api.getUserInfo(inviterID);
+        inviterName = info[inviterID]?.name || "Unknown";
+      } catch (e) {}
 
       const form = {
-        body,
+        body: welcomeMsgTemplate
+          .replace(/\{userNameTag\}/g, names.map(n => n).join(", "))
+          .replace(/\{multiple\}/g, names.length > 1 ? getLang("multiple2") : getLang("multiple1"))
+          .replace(/\{boxName\}/g, threadName)
+          .replace(/\{memberIndex\}/g, memberIndexList.join(", "))
+          .replace(/\{memberPlural\}/g, names.length > 1 ? "s" : "")
+          .replace(/\{inviterName\}/g, inviterName)
+          .replace(/\{prefix\}/g, prefix),
         mentions
       };
 
-      // Attachments if set
-      if (threadData?.data?.welcomeAttachment?.length) {
+      // Include attachments if any
+      if (threadData.data.welcomeAttachment) {
         const files = threadData.data.welcomeAttachment;
-        const attachments = files.map(f => drive.getFile(f, "stream"));
-        const resolved = await Promise.allSettled(attachments);
-        form.attachment = resolved.filter(r => r.status === "fulfilled").map(r => r.value);
+        const attachments = files.map(file => drive.getFile(file, "stream"));
+        form.attachment = (await Promise.allSettled(attachments))
+          .filter(r => r.status === "fulfilled")
+          .map(r => r.value);
       }
 
       message.send(form);
@@ -95,11 +117,9 @@ module.exports = {
   }
 };
 
-function ordinalSuffix(i) {
-  const j = i % 10,
-        k = i % 100;
-  if (j === 1 && k !== 11) return "st";
-  if (j === 2 && k !== 12) return "nd";
-  if (j === 3 && k !== 13) return "rd";
-  return "th";
+// Helper to get suffix like 1st, 2nd, 3rd, etc.
+function getNumberSuffix(n) {
+  const s = ["th", "st", "nd", "rd"];
+  const v = n % 100;
+  return (s[(v - 20) % 10] || s[v] || s[0]);
 }
