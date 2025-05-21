@@ -1,116 +1,105 @@
 const { getTime, drive } = global.utils;
-if (!global.temp.welcomeEvent)
-	global.temp.welcomeEvent = {};
+if (!global.temp.welcomeEvent) global.temp.welcomeEvent = {};
 
 module.exports = {
-	config: {
-		name: "welcome",
-		version: "1.7",
-		author: "NTKhang + customized",
-		category: "events"
-	},
+  config: {
+    name: "welcome",
+    version: "2.0",
+    author: "Ariyan",
+    category: "events"
+  },
 
-	langs: {
-		vi: {
-			session1: "sáng",
-			session2: "trưa",
-			session3: "chiều",
-			session4: "tối",
-			welcomeMessage: "Cảm ơn bạn đã mời tôi vào nhóm!\nPrefix bot: %1\nĐể xem danh sách lệnh hãy nhập: %1help",
-			multiple1: "bạn",
-			multiple2: "các bạn",
-			defaultWelcomeMessage: "🥰 𝘼𝙨𝙨𝙖𝙡𝙖𝙢𝙪 𝘼𝙡𝙖𝙞𝙠𝙪𝙢 {userNameTag}\n✨ 𝙒𝙚𝙡𝙘𝙤𝙢𝙚 {multiple} 𝙩𝙤 𝙤𝙪𝙧 𝙜𝙧𝙤𝙬𝙞𝙣𝙜 𝙛𝙖𝙢𝙞𝙡𝙮: 『{boxName}』!\n\n🌟 𝙔𝙤𝙪 𝙖𝙧𝙚 𝙩𝙝𝙚 {memberCount} 𝙥𝙧𝙚𝙘𝙞𝙤𝙪𝙨 𝙢𝙚𝙢𝙗𝙚𝙧{memberPlural}\n• 𝘼𝙙𝙙𝙚𝙙 𝙗𝙮: {inviterName}\n\n☀️ 𝙒𝙞𝙨𝙝𝙞𝙣𝙜 𝙮𝙤𝙪 𝙖 𝙬𝙤𝙣𝙙𝙚𝙧𝙛𝙪𝙡 {session} ahead!\n\n➤ 𝙋𝙡𝙚𝙖𝙨𝙚 𝙧𝙚𝙖𝙙 𝙤𝙪𝙧 𝙧𝙪𝙡𝙚𝙨: {prefix}rules\n➤ 𝙀𝙭𝙥𝙡𝙤𝙧𝙚 𝙘𝙤𝙤𝙡 𝙘𝙤𝙢𝙢𝙖𝙣𝙙𝙨: {prefix}help\n\n𝙃𝙖𝙫𝙚 𝙛𝙪𝙣 & 𝙚𝙣𝙟𝙤𝙮 𝙩𝙝𝙚 𝘾𝙃𝘼𝙏!"
-		},
-		en: {
-			session1: "morning",
-			session2: "noon",
-			session3: "afternoon",
-			session4: "evening",
-			welcomeMessage: "Thank you for inviting me to the group!\nBot prefix: %1\nTo view the list of commands, please enter: %1help",
-			multiple1: "you",
-			multiple2: "you guys",
-			defaultWelcomeMessage: "🥰 𝘼𝙨𝙨𝙖𝙡𝙖𝙢𝙪 𝘼𝙡𝙖𝙞𝙠𝙪𝙢 {userNameTag}\n✨ 𝙒𝙚𝙡𝙘𝙤𝙢𝙚 {multiple} 𝙩𝙤 𝙤𝙪𝙧 𝙜𝙧𝙤𝙬𝙞𝙣𝙜 𝙛𝙖𝙢𝙞𝙡𝙮: 『{boxName}』!\n\n🌟 𝙔𝙤𝙪 𝙖𝙧𝙚 𝙩𝙝𝙚 {memberCount} 𝙥𝙧𝙚𝙘𝙞𝙤𝙪𝙨 𝙢𝙚𝙢𝙗𝙚𝙧{memberPlural}\n• 𝘼𝙙𝙙𝙚𝙙 𝙗𝙮: {inviterName}\n\n☀️ 𝙒𝙞𝙨𝙝𝙞𝙣𝙜 𝙮𝙤𝙪 𝙖 𝙬𝙤𝙣𝙙𝙚𝙧𝙛𝙪𝙡 {session} ahead!\n\n➤ 𝙋𝙡𝙚𝙖𝙨𝙚 𝙧𝙚𝙖𝙙 𝙤𝙪𝙧 𝙧𝙪𝙡𝙚𝙨: {prefix}rules\n➤ 𝙀𝙭𝙥𝙡𝙤𝙧𝙚 𝙘𝙤𝙤𝙡 𝙘𝙤𝙢𝙢𝙖𝙣𝙙𝙨: {prefix}help\n\n𝙃𝙖𝙫𝙚 𝙛𝙪𝙣 & 𝙚𝙣𝙟𝙤𝙮 𝙩𝙝𝙚 𝘾𝙃𝘼𝙏!"
-		}
-	},
+  langs: {
+    en: {
+      session1: "morning",
+      session2: "noon",
+      session3: "afternoon",
+      session4: "evening",
+      multiple1: "you",
+      multiple2: "you guys"
+    }
+  },
 
-	onStart: async ({ threadsData, message, event, api, getLang }) => {
-		if (event.logMessageType == "log:subscribe")
-			return async function () {
-				const hours = getTime("HH");
-				const { threadID } = event;
-				const { nickNameBot } = global.GoatBot.config;
-				const prefix = global.utils.getPrefix(threadID);
-				const dataAddedParticipants = event.logMessageData.addedParticipants;
-				if (dataAddedParticipants.some((item) => item.userFbId == api.getCurrentUserID())) {
-					if (nickNameBot)
-						api.changeNickname(nickNameBot, threadID, api.getCurrentUserID());
-					return message.send(getLang("welcomeMessage", prefix));
-				}
+  onStart: async ({ threadsData, message, event, api, getLang }) => {
+    if (event.logMessageType !== "log:subscribe") return;
 
-				if (!global.temp.welcomeEvent[threadID])
-					global.temp.welcomeEvent[threadID] = {
-						joinTimeout: null,
-						dataAddedParticipants: []
-					};
+    const { threadID } = event;
+    const hours = getTime("HH");
+    const added = event.logMessageData.addedParticipants;
 
-				global.temp.welcomeEvent[threadID].dataAddedParticipants.push(...dataAddedParticipants);
-				clearTimeout(global.temp.welcomeEvent[threadID].joinTimeout);
+    if (!global.temp.welcomeEvent[threadID])
+      global.temp.welcomeEvent[threadID] = { joinTimeout: null, dataAddedParticipants: [] };
 
-				global.temp.welcomeEvent[threadID].joinTimeout = setTimeout(async function () {
-					const threadData = await threadsData.get(threadID);
-					if (threadData.settings.sendWelcomeMessage == false)
-						return;
-					const dataAddedParticipants = global.temp.welcomeEvent[threadID].dataAddedParticipants;
-					const dataBanned = threadData.data.banned_ban || [];
-					const threadName = threadData.threadName;
-					const userName = [], mentions = [];
-					let multiple = false;
+    global.temp.welcomeEvent[threadID].dataAddedParticipants.push(...added);
+    clearTimeout(global.temp.welcomeEvent[threadID].joinTimeout);
 
-					if (dataAddedParticipants.length > 1)
-						multiple = true;
+    global.temp.welcomeEvent[threadID].joinTimeout = setTimeout(async () => {
+      const threadData = await threadsData.get(threadID);
+      if (threadData?.settings?.sendWelcomeMessage === false) return;
 
-					for (const user of dataAddedParticipants) {
-						if (dataBanned.some((item) => item.id == user.userFbId))
-							continue;
-						userName.push(user.fullName);
-						mentions.push({
-							tag: user.fullName,
-							id: user.userFbId
-						});
-					}
-					if (userName.length == 0) return;
-					let { welcomeMessage = getLang("defaultWelcomeMessage") } = threadData.data;
-					const form = {
-						mentions: welcomeMessage.match(/\{userNameTag\}/g) ? mentions : null
-					};
+      const addedList = global.temp.welcomeEvent[threadID].dataAddedParticipants;
+      const threadName = threadData.threadName || "our group";
+      const mentions = [];
+      const nameList = [];
 
-					const memberCount = (await api.getThreadInfo(threadID)).participantIDs.length;
-					const inviterName = event.logMessageData.inviterName || "Unknown";
+      let allMentions = "";
+      for (const user of addedList) {
+        nameList.push(user.fullName);
+        mentions.push({ tag: user.fullName, id: user.userFbId });
+        allMentions += user.fullName + ", ";
+      }
 
-					welcomeMessage = welcomeMessage
-						.replace(/\{userName\}|\{userNameTag\}/g, userName.join(", "))
-						.replace(/\{boxName\}|\{threadName\}/g, threadName)
-						.replace(/\{multiple\}/g, multiple ? getLang("multiple2") : getLang("multiple1"))
-						.replace(/\{session\}/g, hours <= 10 ? getLang("session1") : hours <= 12 ? getLang("session2") : hours <= 18 ? getLang("session3") : getLang("session4"))
-						.replace(/\{memberCount\}/g, memberCount)
-						.replace(/\{inviterName\}/g, inviterName)
-						.replace(/\{memberPlural\}/g, memberCount > 1 ? "s" : "");
+      if (nameList.length === 0) return;
 
-					form.body = welcomeMessage;
+      const multiple = nameList.length > 1 ? getLang("multiple2") : getLang("multiple1");
+      const memberInfo = await api.getThreadInfo(threadID);
+      const memberIDs = memberInfo.participantIDs || [];
+      const memberIndexes = addedList.map(u => memberIDs.indexOf(u.userFbId) + 1);
+      const indexText = memberIndexes.map(i => `${i}${ordinalSuffix(i)}`).join(", ");
+      const inviter = event.logMessageData.inviterName || "Unknown";
 
-					if (threadData.data.welcomeAttachment) {
-						const files = threadData.data.welcomeAttachment;
-						const attachments = files.reduce((acc, file) => {
-							acc.push(drive.getFile(file, "stream"));
-							return acc;
-						}, []);
-						form.attachment = (await Promise.allSettled(attachments))
-							.filter(({ status }) => status == "fulfilled")
-							.map(({ value }) => value);
-					}
-					message.send(form);
-					delete global.temp.welcomeEvent[threadID];
-				}, 1500);
-			};
-	}
+      const session =
+        hours <= 10 ? getLang("session1")
+        : hours <= 12 ? getLang("session2")
+        : hours <= 18 ? getLang("session3")
+        : getLang("session4");
+
+      const body = 
+`🥰 𝙰𝚂𝚂𝙰𝙻𝙰𝙼𝚄𝙰𝙻𝙰𝙸𝙺𝚄𝙼 ${nameList.join(", ")}
+✨ Welcome ${multiple} To Our 『${threadName}』 Group!
+
+• 𝙸 𝙷𝚘𝚙𝚎 𝚈𝚘𝚞 𝚆𝚒𝚕𝚕 𝚏𝚘𝚕𝚕𝚘𝚠 𝙾𝚞𝚛 𝙶𝚛𝚘𝚞𝚙 𝚁𝚞𝚕𝚎𝚜
+• !𝚛𝚞𝚕𝚎𝚜 𝚏𝚘𝚛 𝙶𝚛𝚘𝚞𝚙 𝚛𝚞𝚕𝚎𝚜
+• !𝚑𝚎𝚕𝚙 𝙵𝚘𝚛 𝚊𝚕𝚕 𝙲𝚘𝚖𝚖𝚊𝚗𝚍
+
+• 𝚈𝚘𝚞 𝙰𝚛𝚎 𝚃𝚑𝚎 ${indexText} 𝙼𝚎𝚖𝚋𝚎𝚛${memberIndexes.length > 1 ? "s" : ""} 𝚒𝚗 𝙾𝚞𝚛 𝙶𝚛𝚘𝚞𝚙
+• 𝙰𝚍𝚍𝚎𝚍 𝙱𝚢: ${inviter}
+`;
+
+      const form = {
+        body,
+        mentions
+      };
+
+      // Attachments if set
+      if (threadData?.data?.welcomeAttachment?.length) {
+        const files = threadData.data.welcomeAttachment;
+        const attachments = files.map(f => drive.getFile(f, "stream"));
+        const resolved = await Promise.allSettled(attachments);
+        form.attachment = resolved.filter(r => r.status === "fulfilled").map(r => r.value);
+      }
+
+      message.send(form);
+      delete global.temp.welcomeEvent[threadID];
+    }, 1500);
+  }
 };
+
+function ordinalSuffix(i) {
+  const j = i % 10,
+        k = i % 100;
+  if (j === 1 && k !== 11) return "st";
+  if (j === 2 && k !== 12) return "nd";
+  if (j === 3 && k !== 13) return "rd";
+  return "th";
+}
