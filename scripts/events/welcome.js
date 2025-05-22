@@ -1,13 +1,11 @@
 const { getTime, drive } = global.utils;
-
-if (!global.temp.welcomeEvent)
-  global.temp.welcomeEvent = {};
+if (!global.temp.welcomeEvent) global.temp.welcomeEvent = {};
 
 module.exports = {
   config: {
     name: "welcome",
     version: "2.1",
-    author: "@Ariyan",
+    author: "NTKhang + Modified by You",
     category: "events"
   },
 
@@ -20,30 +18,43 @@ module.exports = {
       multiple1: "you",
       multiple2: "you guys",
       defaultWelcomeMessage:
-`🥰 𝙰𝚂𝚂𝙰𝙻𝙰𝙼𝚄𝙰𝙻𝙰𝙸𝙺𝚄𝙼 {userNameTag}, 𝚠𝚎𝚕𝚌𝚘𝚖𝚎 {multiple} 𝚃𝚘 𝙾𝚞𝚛 『{boxName}』 𝙶𝚛𝚘𝚞𝚙 😊
+`🥰 𝙰𝚂𝚂𝙰𝙻𝙰𝙼𝚄𝙰𝙻𝙰𝙸𝙺𝚄𝙼 {userNameTag}, 𝚠𝚎𝚕𝚌𝚘𝚖𝚎 {multiple} 𝚃𝚘 𝙾𝚞𝚛 『{boxName}』 𝙶𝚛𝚘𝚞𝚙😊
 • 𝙸 𝙷𝚘𝚙𝚎 𝚈𝚘𝚞 𝚆𝚒𝚕𝚕 𝙵𝚘𝚕𝚕𝚘𝚠 𝙾𝚞𝚛 𝙶𝚛𝚘𝚞𝚙 𝚁𝚞𝚕𝚎𝚜
-• {prefix}rules - 𝙶𝚛𝚘𝚞𝚙 𝚁𝚞𝚕𝚎𝚜
-• {prefix}help - 𝙰𝚕𝚕 𝙲𝚘𝚖𝚖𝚊𝚗𝚍𝚜
+• {prefix}rules 𝚏𝚘𝚛 𝙶𝚛𝚘𝚞𝚙 𝚁𝚞𝚕𝚎𝚜
+• {prefix}help 𝙵𝚘𝚛 𝙰𝚕𝚕 𝙲𝚘𝚖𝚖𝚊𝚗𝚍𝚜
 
-• 𝚈𝚘𝚞 𝙰𝚛𝚎 𝚃𝚑𝚎 {memberIndex} 𝙼𝚎𝚖𝚋𝚎𝚛{memberPlural} 𝙸𝚗 𝙾𝚞𝚛 𝙶𝚛𝚘𝚞𝚙
-• 𝙰𝚍𝚍𝚎𝚍 𝙱𝚢: {inviterName}`
+• 𝚈𝚘𝚞 𝙰𝚛𝚎 𝚃𝚑𝚎 {memberIndex} 𝙼𝚎𝚖𝚋𝚎𝚛{memberPlural} 𝚒𝚗 𝙾𝚞𝚛 𝙶𝚛𝚘𝚞𝚙
+• 𝙰𝚍𝚍𝚎𝚍 𝙱𝚢: {inviterName}`,
+
+      botJoinMessage:
+`✨ 𝙷𝙴𝙻𝙻𝙾! 𝙸'𝚖 𝚊 Ariyan Bot & 𝙸'𝚅𝙴 𝙹𝚄𝚂𝚃 𝙹𝙾𝙸𝙽𝙴𝙳 『{boxName}』 𝙶𝚁𝙾𝚄𝙿!
+
+➤ 𝙲𝚘𝚖𝚖𝚊𝚗𝚍 𝙻𝚒𝚜𝚝: {prefix}help 
+➤ 𝙶𝚛𝚘𝚞𝚙 𝚁𝚞𝚕𝚎𝚜: {prefix}rules
+
+𝙿𝚕𝚎𝚊𝚜𝚎 𝚏𝚘𝚕𝚕𝚘𝚠 𝚐𝚛𝚘𝚞𝚙 𝚛𝚞𝚕𝚎𝚜 𝚊𝚗𝚍 𝚋𝚎 𝚗𝚒𝚌𝚎 𝚝𝚘 𝚎𝚟𝚎𝚛𝚢𝚘𝚗𝚎.
+
+**𝙻𝚎𝚝'𝚜 𝚑𝚊𝚟𝚎 𝚏𝚞𝚗 𝚝𝚘𝚐𝚎𝚝𝚑𝚎𝚛!**  
+- 𝙰𝚞𝚝𝚘 𝚂𝚞𝚙𝚙𝚘𝚛𝚝 𝙼𝚘𝚍𝚎 𝙰𝚌𝚝𝚒𝚟𝚊𝚝𝚎𝚍.`
     }
   },
 
   onStart: async ({ threadsData, message, event, api, getLang, usersData }) => {
     if (event.logMessageType !== "log:subscribe") return;
 
-    const hours = getTime("HH");
     const { threadID } = event;
-    const { nickNameBot } = global.GoatBot.config;
     const prefix = global.utils.getPrefix(threadID);
     const dataAddedParticipants = event.logMessageData.addedParticipants;
 
-    // Bot was added
-    if (dataAddedParticipants.some(u => u.userFbId == api.getCurrentUserID())) {
-      if (nickNameBot)
-        api.changeNickname(nickNameBot, threadID, api.getCurrentUserID());
-      return message.send(getLang("defaultWelcomeMessage", prefix));
+    const botID = api.getCurrentUserID();
+    const threadData = await threadsData.get(threadID);
+    const threadName = threadData.threadName;
+
+    if (dataAddedParticipants.some(u => u.userFbId == botID)) {
+      const botJoinMsg = getLang("botJoinMessage")
+        .replace(/{boxName}/g, threadName)
+        .replace(/{prefix}/g, prefix);
+      return message.send(botJoinMsg);
     }
 
     if (!global.temp.welcomeEvent[threadID])
@@ -56,49 +67,29 @@ module.exports = {
     clearTimeout(global.temp.welcomeEvent[threadID].joinTimeout);
 
     global.temp.welcomeEvent[threadID].joinTimeout = setTimeout(async function () {
-      const threadData = await threadsData.get(threadID);
-      const settings = threadData.settings || {};
-
-      if (settings.sendWelcomeMessage === false) {
-        console.log("[Welcome] sendWelcomeMessage is turned off.");
-        return;
-      }
-
       const addedUsers = global.temp.welcomeEvent[threadID].dataAddedParticipants;
-      const dataBanned = threadData.data?.banned_ban || [];
-      const threadName = threadData.threadName || "this group";
-
+      const dataBanned = threadData.data.banned_ban || [];
       const mentions = [];
       const names = [];
 
       for (const user of addedUsers) {
-        if (dataBanned.some(b => b.id == user.userFbId)) continue;
+        if (dataBanned.some(ban => ban.id == user.userFbId)) continue;
         names.push(user.fullName);
         mentions.push({ tag: user.fullName, id: user.userFbId });
       }
 
       if (names.length === 0) return;
 
-      const welcomeMsgTemplate = threadData.data?.welcomeMessage || getLang("defaultWelcomeMessage");
-
+      const welcomeMsgTemplate = threadData.data.welcomeMessage || getLang("defaultWelcomeMessage");
       const memberInfo = await api.getThreadInfo(threadID);
       const memberCount = memberInfo.participantIDs.length;
 
-      // Member position
       const memberIndexList = [];
       for (let i = memberCount - names.length + 1; i <= memberCount; i++) {
         memberIndexList.push(i + getNumberSuffix(i));
       }
 
-      // Get inviter name
-      let inviterName = "Unknown";
-      try {
-        inviterName = await usersData.getName(event.author) || "Unknown";
-      } catch (err) {
-        console.warn("Could not get inviter name:", err.message);
-      }
-
-      // Message prepare
+      const inviterName = await usersData.getName(event.author);
       const form = {
         body: welcomeMsgTemplate
           .replace(/\{userNameTag\}/g, names.join(", "))
@@ -111,8 +102,7 @@ module.exports = {
         mentions
       };
 
-      // Attachment support
-      if (threadData.data?.welcomeAttachment) {
+      if (threadData.data.welcomeAttachment) {
         const files = threadData.data.welcomeAttachment;
         const attachments = files.map(file => drive.getFile(file, "stream"));
         form.attachment = (await Promise.allSettled(attachments))
@@ -126,9 +116,8 @@ module.exports = {
   }
 };
 
-// Helper function: ordinal suffix (e.g., 1st, 2nd)
 function getNumberSuffix(n) {
   const s = ["th", "st", "nd", "rd"];
   const v = n % 100;
-  return s[(v - 20) % 10] || s[v] || s[0];
+  return (s[(v - 20) % 10] || s[v] || s[0]);
 }
