@@ -7,7 +7,7 @@ module.exports = {
   config: {
     name: "welcome",
     version: "2.1",
-    author: "NTKhang + Fixed by ChatGPT",
+    author: "@Ariyan",
     category: "events"
   },
 
