@@ -1,3 +1,4 @@
+const fs = require("fs");
 const { getTime, drive } = global.utils;
 if (!global.temp.welcomeEvent) global.temp.welcomeEvent = {};
 
@@ -27,7 +28,7 @@ module.exports = {
 • 𝙰𝚍𝚍𝚎𝚍 𝙱𝚢: {inviterName}`,
 
       botJoinMessage:
-`✨ 𝙷𝙴𝙻𝙻𝙾! 𝙸'𝚖 𝚊 Ariyan Bot & 𝙸'𝚅𝙴 𝙹𝚄𝚂𝚃 𝙹𝙾𝙸𝙽𝙴𝙳 『{boxName}』 𝙶𝚁𝙾𝚄𝙿!
+`✨ 𝙷𝙴𝙻𝙻𝙾! 𝙸'𝚖 𝚊 Ariyan Bot & 𝙸'𝚅𝙴 𝙹𝚄𝚂𝚃 𝙹𝙾𝙸𝙽𝙴𝙳 『{boxName}』 𝙶𝚁𝙾𝚄𝚄𝙿!
 
 ➤ 𝙲𝚘𝚖𝚖𝚊𝚗𝚍 𝙻𝚒𝚜𝚝: {prefix}help 
 ➤ 𝙶𝚛𝚘𝚞𝚙 𝚁𝚞𝚕𝚎𝚜: {prefix}rules
@@ -54,6 +55,18 @@ module.exports = {
       const botJoinMsg = getLang("botJoinMessage")
         .replace(/{boxName}/g, threadName)
         .replace(/{prefix}/g, prefix);
+
+      // ===== Set Nickname from config.json =====
+      try {
+        const configData = JSON.parse(fs.readFileSync("config.json", "utf-8"));
+        const nickname = configData.botNickname || "Bot";
+
+        await api.changeNickname(nickname, threadID, botID);
+      } catch (err) {
+        console.error("Failed to set nickname:", err);
+      }
+      // =========================================
+
       return message.send(botJoinMsg);
     }
 
